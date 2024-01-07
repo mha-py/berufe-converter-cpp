@@ -1,0 +1,1 @@
+c++ main.cpp layers.cpp transformer.cpp tokenizer.cpp prediction.cpp -O3 -fopenmp
