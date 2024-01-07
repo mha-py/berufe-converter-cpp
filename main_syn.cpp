@@ -3,7 +3,7 @@
 #include "transformer.h"
 #include "layers.h"
 #include "tokenizer.h"
-#include "prediction.h"
+#include "prediction_syn.h"
 #include <fstream>
 #include <iostream>
 #include <cstdint>
@@ -20,7 +20,7 @@ int main() {
     // Test der prediction
     Transformer net;
     // net.load("weights_010124r_1.dat");
-    net.load("w_syn_060124r_512.dat");
+    net.load("w_syn_060124r.dat");
     // std::wstring res = predict(L"Arzt", net);
     // std::wcout << res << std::endl;
     std::wstring out;
@@ -30,9 +30,13 @@ int main() {
         std::getline(std::wcin, input);
         // std::wcout << input << std::endl;
         // std::wcout << prep(input) << std::endl;
-        out = predict(input, net, true, p);
-        std::wcout << out << std::endl; //<< std::endl;
-        std::cout << p << std::endl << std::endl;
+        std::vector<std::wstring> out;
+        std::vector<float> ps;
+        predict_mult(input, 10, net, out, ps);
+        for (int i=0; i<out.size(); i++) {
+            std::wcout << out[i] << std::endl; //<< std::endl;
+            std::cout << ps[i] << std::endl << std::endl;
+        }
     }
 
 

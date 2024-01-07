@@ -1,1 +1,1 @@
-c++ main_syn.cpp layers.cpp transformer.cpp tokenizer.cpp prediction.cpp -O3 -fopenmp
+c++ main_syn.cpp layers.cpp transformer.cpp tokenizer.cpp prediction_syn.cpp -O3 -fopenmp
