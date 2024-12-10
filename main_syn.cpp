@@ -2,8 +2,8 @@
 
 #include "transformer.h"
 #include "layers.h"
-#include "tokenizer.h"
-#include "prediction_syn.h"
+#include "tokenizer_bpe.h"
+#include "prediction_bpe.h"
 #include <fstream>
 #include <iostream>
 #include <cstdint>
@@ -19,22 +19,23 @@ int main() {
 
     // Test der prediction
     Transformer net;
-    // net.load("weights_010124r_1.dat");
     net.load("w_syn_060124r.dat");
-    // std::wstring res = predict(L"Arzt", net);
-    // std::wcout << res << std::endl;
+
+    Tokenizer tokenizer;
+    tokenizer.LoadBPECodes("bpe_codes.txt");
+    tokenizer.LoadDicts("tokens.txt");
+
+
     std::wstring out;
     while (true) {
         float p;
-        std::wstring input;
-        std::getline(std::wcin, input);
-        // std::wcout << input << std::endl;
-        // std::wcout << prep(input) << std::endl;
-        std::vector<std::wstring> out;
+        std::string input;
+        std::getline(std::cin, input);
+        std::vector<std::string> out;
         std::vector<float> ps;
-        predict_mult(input, 10, net, out, ps);
+        predict_mult(input, 10, net, tokenizer, out, ps);
         for (int i=0; i<out.size(); i++) {
-            std::wcout << out[i] << std::endl; //<< std::endl;
+            std::cout << out[i] << std::endl; //<< std::endl;
             std::cout << ps[i] << std::endl << std::endl;
         }
     }
